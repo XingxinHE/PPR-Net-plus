@@ -1,0 +1,67 @@
+[project]
+name = "robofab"
+version = "0.0.1"
+authors = [
+  { name="Ziqi Wang", email="ziqiw@ust.hk" },
+]
+
+dependencies = [
+    "pytest >= 8.3.0",
+    "trimesh >= 4.6.4",
+    "scipy >= 1.15.2",
+    "usd-core >= 25.2",
+    "polyscope >= 2.3.0",
+    "hatchling >= 1.27.0",
+    "pytorch-kinematics >= 0.7.5",
+    "pycollada >= 0.9",
+    "shapely >= 2.1.1",
+    'torch>=2.6.0',
+    "torchvision>=0.21.0",
+    "numpy == 1.26.4",
+    "matplotlib",
+    "compas_eve",
+    "wandb",
+    "h5py",
+    "tqdm",
+    "opencv-python",
+    "scikit-learn",
+    "hydra-core==0.11.3",
+    "pytorch-lightning==0.7.1",
+    "warp-lang==1.10.0",
+    "nibabel",
+    "fpsample"
+]
+
+description = "A package for conducting research using robots for assembly"
+readme = "README.md"
+requires-python = ">=3.10"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Operating System :: OS Independent",
+]
+
+[tool.hatch.build.targets.wheel]
+ignore-vcs = true
+packages = ["src/learn2assemble"]
+include = ["src/**"]
+
+[build-system]
+requires = ["hatchling >= 1.27.0"]
+build-backend = "hatchling.build"
+
+[project.urls]
+Homepage = "https://github.com/kiki007/LearningToAssemble"
+Issues = "https://github.com/kiki007/LearningToAssemble/issues"
+
+[[tool.uv.index]]
+name = "pytorch-cu126"
+url = "https://download.pytorch.org/whl/cu126"
+explicit = true
+
+[tool.uv.sources]
+torch = [
+  { index = "pytorch-cu126", marker = "sys_platform == 'linux' or sys_platform == 'win32'" },
+]
+torchvision = [
+  { index = "pytorch-cu126", marker = "sys_platform == 'linux' or sys_platform == 'win32'" },
+]

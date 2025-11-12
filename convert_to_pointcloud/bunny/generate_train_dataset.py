@@ -2,7 +2,7 @@ import os
 from H5DataGenerator import *
 
 # output dirs
-OUT_ROOT_DIR = '../../h5_dataset/bunny'
+OUT_ROOT_DIR = 'E:\\h5_dataset\\bunny'
 if not os.path.exists( OUT_ROOT_DIR ):
     os.mkdir(OUT_ROOT_DIR)
 TRAIN_SET_DIR = os.path.join(OUT_ROOT_DIR, 'train')
@@ -10,15 +10,15 @@ if not os.path.exists( TRAIN_SET_DIR ):
     os.mkdir(TRAIN_SET_DIR)
 
 # input dirs
-IN_ROOT_DIR = '../../data_simulation/training/SileaneBunny_part_2'
+IN_ROOT_DIR = 'E:\\SileaneBunny_part_1\\SileaneBunny_part_1'
 GT_DIR = os.path.join(IN_ROOT_DIR, 'gt')
 SEGMENT_DIR = os.path.join(IN_ROOT_DIR, 'p_segmentation')
 DEPTH_DIR = os.path.join(IN_ROOT_DIR, 'p_depth')
 
 
 if __name__ == "__main__":
-    cycle_idx_list = range(250, 500)
-    scene_idx_list = range(1, 81)
+    cycle_idx_list = range(230, 250)
+    scene_idx_list = range(3, 81)
     g = H5DataGenerator(os.path.join(IN_ROOT_DIR, 'parameter.json'))
     for cycle_id in cycle_idx_list:
         # load background image

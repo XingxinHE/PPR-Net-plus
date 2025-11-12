@@ -14,9 +14,6 @@ import backbone
 from object_type import ObjectType
 from pose_loss import PoseLossCalculator
 
-# list all supported backbones
-BACKBONE_SUPPORTED = ['pointnet2', 'pointnet2msg', 'rscnn']
-
 class PPRNet(nn.Module):
     r"""
         PPRNet.
@@ -24,7 +21,6 @@ class PPRNet(nn.Module):
         Parameters
         ----------
         object_types: ObjectType or list of ObjectType
-        backbone_name: str, see BACKBONE_SUPPORTED
         backbone_config: dict
             if backbone_name == 'pointnet2':
                 keys: {npoint_per_layer,radius_per_layer,input_feature_dims(optional),use_xyz(optional)}
@@ -34,8 +30,7 @@ class PPRNet(nn.Module):
             keys: {trans_head, rot_head, vis_head(optional), cls_head(optional)}
         return_loss: bool
     """
-    def __init__(self, object_types, backbone_name, backbone_config, use_vis_branch, loss_weights, return_loss):
-        assert backbone_name in BACKBONE_SUPPORTED
+    def __init__(self, object_types, backbone_config, use_vis_branch, loss_weights, return_loss):
         super().__init__()
         self._set_up_constants()
         # self.num_point = 16384
@@ -52,13 +47,7 @@ class PPRNet(nn.Module):
         
 
         # Network basic building blocks
-        # 1.backbone
-        if backbone_name == 'pointnet2':
-            self.backbone = backbone.Pointnet2Backbone(**backbone_config)
-        elif backbone_name == 'pointnet2msg':
-            self.backbone = backbone.Pointnet2MSGBackbone(**backbone_config)
-        elif backbone_name == 'rscnn':
-            self.backbone = backbone.RSCNNBackbone()
+        self.backbone = backbone.Pointnet2MSGBackbone(**backbone_config)
         backbone_feature_dim = 128  # by default, extracted feature dim is 128
 
         # 2.sementic classificaion head, predict pointwise sementic class
@@ -112,7 +101,7 @@ class PPRNet(nn.Module):
         num_point = inputs['point_clouds'].shape[1]
 
         input_points = inputs['point_clouds']   # (B, N, 3)
-        features = self.backbone(input_points)  # (B, 128, N)
+        features = self.backbone(input_points).transpose(1, 2).contiguous()  # (B, 128, N)
 
         if self.use_cls_branch:
             pred_cls_logits = self.cls_head(features)   # (B, num_type, N)
@@ -186,23 +175,17 @@ class PPRNet(nn.Module):
                 losses['vis_head'] = PoseLossCalculator.visibility_loss(pred_visibility_flatten, vis_label_flatten) \
                                                             * self.loss_weights['vis_head']
             # trans loss
-            l, w = PoseLossCalculator.trans_loss(pred_centroids_flatten,
-                                                        trans_label_flatten,  
-                                                        vis_label_flatten)
+            l, w = PoseLossCalculator.trans_loss(pred_centroids_flatten, trans_label_flatten, vis_label_flatten)
             losses['trans_head'] = (l / w) * self.loss_weights['trans_head']
             # rot loss
-            l, w = self.loss_calculators[0].rot_loss(pred_mat_flatten,
-                                                        rot_label_flatten,  
-                                                        vis_label_flatten)
+            l, w = self.loss_calculators[0].rot_loss(pred_mat_flatten, rot_label_flatten, vis_label_flatten)
             losses['rot_head'] = (l / w) * self.loss_weights['rot_head']
         else:
             assert self.use_cls_branch == True
             if self.use_vis_branch:
                 losses['vis_head'] = PoseLossCalculator.visibility_loss(pred_visibility_flatten, 
                                                                                 vis_label_flatten) * self.loss_weights['vis_head']
-            l, w = PoseLossCalculator.classification_loss(pred_cls_logits_flatten, 
-                                                                cls_label_flatten,
-                                                                vis_label_flatten)       
+            l, w = PoseLossCalculator.classification_loss(pred_cls_logits_flatten, cls_label_flatten, vis_label_flatten)
             losses['cls_head'] = (l / w) * self.loss_weights['cls_head']
             l, w = PoseLossCalculator.trans_loss(pred_centroids_flatten, 
                                                         trans_label_flatten,  
@@ -352,55 +335,3 @@ def save_pth(pth_path, current_epoch, net, optimizer, loss):
     except:
         save_dict['model_state_dict'] = net.state_dict()
     torch.save(save_dict, pth_path + '.pth')
-
-# if __name__ == "__main__":
-#     # import numpy as np
-#     # xyz_np = np.ones([8,16384,3], dtype=np.float)
-#     # xyz = torch.from_numpy(xyz_np).cuda()
-#     # print(xyz)
-
-#     backbone_config = {
-#         'npoint_per_layer': [4096,1024,256,64],
-#         'radius_per_layer': [30,60,120,240]
-#     }
-#     net = PPRNet(2, 'pointnet2', backbone_config, True)
-#     # # print(net)
-#     # # exit()
-#     # net.cuda()
-
-#     # test _euler_angle_to_rotation_matrix()
-#     angle = torch.Tensor([[3.14159/2,0.0,0.0]])
-#     angle = angle.cuda()
-#     print(angle)
-#     print(angle.size())
-#     print(angle.shape[0])
-#     # net = PPRNet(2, 'pointnet2', backbone_config, True)
-#     mat = net._euler_angle_to_rotation_matrix(angle)
-#     print(mat, mat.shape, mat.dtype, mat.device)
-#     angle = torch.Tensor([[3.14159/2,0.0,0.0], [3.14159/2,0.0,0.0]])
-#     angle = angle.cuda()
-#     mat = net._euler_angle_to_rotation_matrix(angle)
-#     print(mat, mat.shape, mat.dtype, mat.device)
-#     mat = net._euler_angle_to_rotation_matrix(angle)
-#     print(mat, mat.shape, mat.dtype, mat.device)
-#     exit()
-
-
-
-
-#     torch.manual_seed(1)
-#     torch.cuda.manual_seed_all(1)
-#     xyz = torch.randn(8, 16384, 3).cuda()
-#     xyz.requires_grad=True
-
-
-
-#     for _ in range(1):
-#         output = net({'point_clouds':xyz})
-#         for o in output:
-#             print(o.shape) if o is not None else print(None)
-#         # features.backward(torch.cuda.FloatTensor(*features.size()).fill_(1))
-#         # # print(new_features)
-#         # # print(xyz.grad)
-#         # print('xyz', xyz.shape)
-

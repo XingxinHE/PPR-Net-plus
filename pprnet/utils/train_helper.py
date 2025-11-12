@@ -83,13 +83,12 @@ class OptimizerLRScheduler(object):
     #     return lr
 
 class SimpleLogger():
-    def __init__(self, log_dir, file_path):
+    def __init__(self, log_dir):
         if os.path.exists(log_dir):
             # raise RuntimeError('Dir:%s alreadly exist! Check if you really want to overwrite it.' % log_dir)
             pass
         else:
             os.makedirs(log_dir)
-        os.system('cp %s %s' % (file_path, log_dir)) # bkp of train procedure
         self.log_file = open(os.path.join(log_dir, 'log_train.txt'), 'w')
         self.log_file.write('\n')
         self.cnt = 0

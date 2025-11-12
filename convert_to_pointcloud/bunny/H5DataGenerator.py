@@ -3,10 +3,10 @@ import math
 import numpy as np
 import cv2
 import os
-import tensorflow as tf
-from tf_ops.sampling.tf_sampling import gather_point, farthest_point_sample
 import h5py
 import time
+import fpsample
+import os
 
 # from show3d_balls import showpoints
 
@@ -19,17 +19,6 @@ class H5DataGenerator(object):
         '''
         self.params = self._load_parameters(params_file_name)
         self.target_num_point = target_num_point
-
-        # for fps
-        with tf.device('/gpu:0'):
-            self.input_point_pl = tf.placeholder(tf.float32, shape=(1, None, 3))
-            self.sampled_idx_op = farthest_point_sample(16384,self.input_point_pl)
-        # Create a session
-        config = tf.ConfigProto()
-        config.gpu_options.allow_growth = True
-        config.allow_soft_placement = True
-        config.log_device_placement = False
-        self.sess = tf.Session(config=config)
 
     def process_train_set(self, depth_img, bg_depth_img, segment_img, gt_file_path, output_file_path, xyz_limit=None, verbose=True):
         '''
@@ -70,13 +59,10 @@ class H5DataGenerator(object):
             points = points_tile[:self.target_num_point]
             obj_ids_tile = np.tile(obj_ids, [t])
             obj_ids = obj_ids_tile[:self.target_num_point]
-        # if len(points) > target_num_point, using fps to sample to target_num_point
+
         if num_pnt > self.target_num_point:
-            sampled_idx = self.sess.run(self.sampled_idx_op, feed_dict={self.input_point_pl: points.reshape([1, -1, 3])})
-            sampled_idx = sampled_idx.reshape([-1])
-            # showpoints(points, ballradius=3)
+            sampled_idx = fpsample.bucket_fps_kdtree_sampling(points.reshape(-1, 3), self.target_num_point)
             points = points[sampled_idx]
-            # showpoints(points, ballradius=3)
             obj_ids = obj_ids[sampled_idx]
 
         # step 4: collect labels
@@ -93,7 +79,8 @@ class H5DataGenerator(object):
 
         # step 5: save as h5 file
         if not os.path.exists(output_file_path):
-            with h5py.File(output_file_path) as f:
+            folder_path = os.path.dirname(output_file_path)
+            with h5py.File(output_file_path, "w") as f:
                 f['data'] = points
                 f['labels'] = labels
                 if verbose:
@@ -104,55 +91,6 @@ class H5DataGenerator(object):
                         print('Waring: not enough points, padded to target number')
                     if num_bg_pnt > 0:
                         print('Waring: contains background points')
-
-    def process_test_set(self, depth_img, bg_depth_img, output_file_path, xyz_limit=None, verbose=True):
-        '''
-        Input:
-            depth_img: np array of depth image, dtype is uint16
-            bg_depth_img: np array of background depth image, dtype is uint16
-            output_file_path: str, output h5 path
-            xyz_limit: None if no limit for xyz. Typical [ [xmin, xmax], [ymin, ymax], [zmin, zmax] ]
-            verbose: whether to display logging info
-        '''
-        if verbose:
-            start_time = time.time()
-        # step 1: check and parse input
-        assert depth_img.shape == (self.params['resolutionY'], self.params['resolutionX']) and depth_img.dtype == np.uint16
-        assert bg_depth_img.shape == depth_img.shape and bg_depth_img.dtype == np.uint16
-
-        # step 2: convet foregroud pixel to 3d points, and extract its object ids
-        ys, xs = np.where(depth_img != bg_depth_img)
-        zs = depth_img[ys, xs]
-        ys = ys + self.params['pixelOffset_Y_KoSyTopLeft']
-        xs = xs + self.params['pixelOffset_X_KoSyTopLeft']
-        points = self._depth_to_pointcloud_optimized(xs, ys, zs, to_mm=False, xyz_limit=xyz_limit)
-
-        # step 3: sample or pad to target_num_point
-        # if len(points) <= target_num_point, pad to target_num_point
-        num_pnt = points.shape[0]
-        if num_pnt == 0:
-            print('No foreground points!!!!!')
-            return
-        if num_pnt <= self.target_num_point:
-            t = int(1.0 * self.target_num_point / num_pnt) + 1
-            points_tile = np.tile(points, [t, 1])
-            points = points_tile[:self.target_num_point]
-        # if len(points) > target_num_point, using fps to sample to target_num_point
-        if num_pnt > self.target_num_point:
-            sampled_idx = self.sess.run(self.sampled_idx_op, feed_dict={self.input_point_pl: points.reshape([1, -1, 3])})
-            sampled_idx = sampled_idx.reshape([-1])
-            points = points[sampled_idx]
-
-        # step 4: save as h5 file
-        if not os.path.exists(output_file_path):
-            with h5py.File(output_file_path) as f:
-                f['data'] = points
-                if verbose:
-                    t = time.time() - start_time
-                    print('Successfully write to %s in %f seconds.' % (output_file_path, t))
-                    print('Foreground point number: %d' % num_pnt)
-                    if num_pnt < self.target_num_point:
-                        print('Waring: not enough points, padded to target number')
 
     def _depth_to_pointcloud_optimized(self, us, vs, zs, to_mm = False, xyz_limit=None):
         '''
