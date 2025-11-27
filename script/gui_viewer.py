@@ -6,7 +6,7 @@ import trimesh
 from pprnet.data.IPA_pose_dataset import IPAPoseDataset
 from pprnet import ROOT_DIR
 from torchvision import transforms
-DATASET_DIR = f'{ROOT_DIR}/h5_dataset/bunny/'
+DATASET_DIR = f'E:\\h5_dataset\\bunny\\'
 from pprnet.data.pointcloud_transforms import PointCloudShuffle, ToTensor
 
 from pprnet.pprnet import PPRNet, load_checkpoint, save_checkpoint
@@ -24,15 +24,15 @@ transforms = transforms.Compose(
     ]
 )
 
-test_dataset = IPAPoseDataset(DATASET_DIR, [0, 1], [1, 46], transforms=transforms)
-data = test_dataset[30]
+test_dataset = IPAPoseDataset(DATASET_DIR, [245, 246], [3, 81], transforms=transforms)
+data = test_dataset[50]
 pcl = data["point_clouds"].cpu().numpy()
 ps.init()
 wp.init()
 
 ps.set_front_dir("neg_y_front")
 ps.set_up_dir("neg_z_up")
-ps.register_point_cloud(name = "points", points=pcl / 1000.0)
+
 type_bunny = ObjectType(type_name='bunny', class_idx=0, symmetry_type='finite',
                         lambda_p=[[0.0263663, 0.0, 0.0], [0.0, 0.0338224, 0.0], [-0.0, 0.0, 0.0484393]],
                         G=[[[1, 0, 0], [0, 1, 0], [0, 0, 1]]])
@@ -47,7 +47,7 @@ loss_weights = {
     'vis_head': 50.0
 }
 PROJECT_NAME = "ppr"
-LOG_NAME = 'log1_batch8_scale3_test_log'
+LOG_NAME = 'log0_batch8_scale3_test_log'
 log_dir = os.path.join(ROOT_DIR, 'logs', PROJECT_NAME, LOG_NAME)
 
 net = PPRNet(type_bunny, backbone_config, True, loss_weights, True)
@@ -111,12 +111,13 @@ for mat_cluster in pred_mat_cluster:
     cluster_mat_pred.append(eulerangles.quat2mat(quat))
 
 pcl = ps.register_point_cloud(name = "centroid_points", points=input_point / 1000.0)
-pcl.add_color_quantity("cluster", color_per_point)
+pcl.add_color_quantity("cluster", color_per_point, enabled = True)
 
 
 
 bunny_mesh = trimesh.load(f"{ROOT_DIR}/models/SileaneBunny.obj")
 
+group = ps.create_group("bunny")
 for cluster_id in range(n_clusters):
     rot_mat = cluster_mat_pred[cluster_id]
     center = cluster_center_pred[cluster_id]
@@ -124,8 +125,10 @@ for cluster_id in range(n_clusters):
     T[:3, :3] = rot_mat
     T[:3, 3] = center / 1000.0
 
-    #copy_bunny = bunny_mesh.copy()
-    #copy_bunny.apply_transform(T)
-    #ps.register_surface_mesh(f"bunny {cluster_id}", copy_bunny.vertices, copy_bunny.faces)
-    #https: // owncloud.fraunhofer.de / index.php / s / AacICuOWQVWDDfP / download
+    copy_bunny = bunny_mesh.copy()
+    copy_bunny.apply_transform(T)
+    obj = ps.register_surface_mesh(f"bunny {cluster_id}", copy_bunny.vertices, copy_bunny.faces, color = color_cluster[cluster_id] / 255.0)
+    obj.add_to_group(group)
+group.set_hide_descendants_from_structure_lists(True)
+group.set_show_child_details(False)
 ps.show()

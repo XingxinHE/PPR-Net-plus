@@ -122,7 +122,7 @@ def train(start_epoch):
             cid = int(epoch/TRAIN_DATA_HOLD_EPOCH) % len(TRAIN_CYCLE_RANGES)
             print('Loading train dataset...')
             train_dataset = IPAPoseDataset(DATASET_DIR, TRAIN_CYCLE_RANGES[cid], TRAIN_SCENE_RANGE, transforms=transforms)
-            train_loader = DataLoader(train_dataset, batch_size=BATCH_SIZE, shuffle=True, num_workers=4)
+            train_loader = DataLoader(train_dataset, batch_size=BATCH_SIZE, shuffle=True, num_workers=0)
             print('Train dataset loaded, train point cloud size:', train_dataset.dataset['data'].shape)
 
         logger.log_string('************** EPOCH %03d **************' % (epoch))
@@ -152,8 +152,8 @@ if __name__=='__main__':
     MAX_EPOCH = 5000
     # log setting
     PROJECT_NAME = "ppr"
-    LOG_NAME = 'log0_batch8_scale3_test_log'
-    CHECKPOINT_PATH = None  # str or None, if is not None, model will continue to train from CHECKPOINT_PATH
+    LOG_NAME = 'log1_batch8_scale3_test_log'
+    CHECKPOINT_PATH = os.path.join(ROOT_DIR, 'logs', PROJECT_NAME, "log0_batch8_scale3_test_log", "checkpoint.tar")  # str or None, if is not None, model will continue to train from CHECKPOINT_PATH
     # lr decay
     BASE_LEARNING_RATE = 0.001
     LR_DECAY_RATE = 0.7
@@ -171,9 +171,9 @@ if __name__=='__main__':
     # dataset settings
     DATASET_DIR = f'E:\\h5_dataset\\bunny\\'
     TRAIN_DATA_HOLD_EPOCH = 2
-    TRAIN_CYCLE_RANGES = [[id, id + 1] for id in np.arange(1, 230)]
+    TRAIN_CYCLE_RANGES = [[1, 60], [61, 120], [121, 180], [181, 240]]
     TRAIN_SCENE_RANGE = [3, 81]
-    TEST_CYCLE_RANGE = [229, 230]
+    TEST_CYCLE_RANGE = [240, 250]
     TEST_SCENE_RANGE = TRAIN_SCENE_RANGE
     # train setting
     EVAL_STAP = 1  # run evaluation after training EVAL_STAP epoch(s)
@@ -209,6 +209,7 @@ if __name__=='__main__':
         net = nn.DataParallel(net)
     net.to(device)
     optimizer = torch.optim.Adam(net.parameters(), lr=BASE_LEARNING_RATE)
+
     if CHECKPOINT_PATH is not None:
         net, optimizer, start_epoch = load_checkpoint(CHECKPOINT_PATH, net, optimizer)
     else:
@@ -227,7 +228,7 @@ if __name__=='__main__':
     )
     print('Loading test dataset')
     test_dataset = IPAPoseDataset(DATASET_DIR, TEST_CYCLE_RANGE, TRAIN_SCENE_RANGE, transforms=transforms)
-    test_loader = DataLoader(test_dataset, batch_size=BATCH_SIZE, shuffle=True, num_workers=4)
+    test_loader = DataLoader(test_dataset, batch_size=BATCH_SIZE, shuffle=True, num_workers=2)
     print('Test dataset loaded, test point cloud size:', test_dataset.dataset['data'].shape)
     # -----------------------END-----------------------
 
