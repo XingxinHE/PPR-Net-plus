@@ -7,7 +7,7 @@ from pprnet import ROOT_DIR
 def load_dataset_by_cycle(data_path, cycle_idx_list, scene_idx_list, num_point_in_h5 = 16384, train = True):
 
     data_list, trans_label_list, rot_label_list, vs_label_list, cls_label_list= [], [], [], [],[]
-    
+
     for cycle_id in cycle_idx_list:
         # print('Loading cycle: %d'%cycle_id)
         for scene_id in scene_idx_list:

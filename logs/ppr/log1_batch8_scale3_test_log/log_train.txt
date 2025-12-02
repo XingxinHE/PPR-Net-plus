@@ -1,6 +1,1011 @@
 
+************** EPOCH 000 **************
+2025-12-02 02:48:04.142187
+Current learning rate: [0.001]
+Current BN decay momentum: 0.500000
+--------------------
+train translation loss: 17.399402
+train rotation loss: 40.328336
+train vis loss: 7.644769
+train dist: 59.175434
+--------------------
+eval translation loss: 15.729637
+eval rotation loss: 39.541990
+eval vis loss: 5.427835
+eval dist: 54.775365
+Model saved in file: /workspace/PPR-Net-plus/logs/ppr/log1_batch8_scale3_test_log/checkpoint.tar
+************** EPOCH 001 **************
+2025-12-02 02:48:55.908596
+Current learning rate: [0.001]
+Current BN decay momentum: 0.500000
+--------------------
+train translation loss: 13.986125
+train rotation loss: 38.092554
+train vis loss: 5.234895
+train dist: 49.701716
+--------------------
+eval translation loss: 12.884272
+eval rotation loss: 38.147813
+eval vis loss: 7.060491
+eval dist: 45.879750
+Model saved in file: /workspace/PPR-Net-plus/logs/ppr/log1_batch8_scale3_test_log/checkpoint.tar
+************** EPOCH 002 **************
+2025-12-02 02:49:50.321291
+Current learning rate: [0.001]
+Current BN decay momentum: 0.500000
+--------------------
+train translation loss: 11.319043
+train rotation loss: 31.986846
+train vis loss: 5.264428
+train dist: 41.049999
+--------------------
+eval translation loss: 10.549891
+eval rotation loss: 30.616215
+eval vis loss: 5.191355
+eval dist: 38.492007
+Model saved in file: /workspace/PPR-Net-plus/logs/ppr/log1_batch8_scale3_test_log/checkpoint.tar
+************** EPOCH 003 **************
+2025-12-02 02:50:40.666318
+Current learning rate: [0.001]
+Current BN decay momentum: 0.500000
+--------------------
+train translation loss: 9.231059
+train rotation loss: 24.474105
+train vis loss: 4.994636
+train dist: 34.020166
+--------------------
+eval translation loss: 8.258296
+eval rotation loss: 21.880134
+eval vis loss: 5.284345
+eval dist: 30.704075
+Model saved in file: /workspace/PPR-Net-plus/logs/ppr/log1_batch8_scale3_test_log/checkpoint.tar
+************** EPOCH 004 **************
+2025-12-02 02:51:34.718021
+Current learning rate: [0.001]
+Current BN decay momentum: 0.500000
+--------------------
+train translation loss: 7.543681
+train rotation loss: 19.902319
+train vis loss: 4.809991
+train dist: 28.560932
+--------------------
+eval translation loss: 7.135813
+eval rotation loss: 19.001389
+eval vis loss: 6.024858
+eval dist: 27.342328
+Model saved in file: /workspace/PPR-Net-plus/logs/ppr/log1_batch8_scale3_test_log/checkpoint.tar
+************** EPOCH 005 **************
+2025-12-02 02:52:25.193930
+Current learning rate: [0.001]
+Current BN decay momentum: 0.500000
+--------------------
+train translation loss: 6.420577
+train rotation loss: 16.965664
+train vis loss: 4.489411
+train dist: 24.821097
+--------------------
+eval translation loss: 6.173786
+eval rotation loss: 16.346289
+eval vis loss: 4.122085
+eval dist: 24.036192
+Model saved in file: /workspace/PPR-Net-plus/logs/ppr/log1_batch8_scale3_test_log/checkpoint.tar
+************** EPOCH 006 **************
+2025-12-02 02:53:18.592330
+Current learning rate: [0.001]
+Current BN decay momentum: 0.500000
+--------------------
+train translation loss: 5.781534
+train rotation loss: 15.341914
+train vis loss: 4.407495
+train dist: 22.607169
+--------------------
+eval translation loss: 5.406610
+eval rotation loss: 13.784753
+eval vis loss: 4.072755
+eval dist: 21.177794
+Model saved in file: /workspace/PPR-Net-plus/logs/ppr/log1_batch8_scale3_test_log/checkpoint.tar
+************** EPOCH 007 **************
+2025-12-02 02:54:09.345367
+Current learning rate: [0.001]
+Current BN decay momentum: 0.500000
+--------------------
+train translation loss: 5.265701
+train rotation loss: 13.758540
+train vis loss: 4.225128
+train dist: 20.843108
+--------------------
+eval translation loss: 5.245635
+eval rotation loss: 13.091288
+eval vis loss: 3.854952
+eval dist: 20.636469
+Model saved in file: /workspace/PPR-Net-plus/logs/ppr/log1_batch8_scale3_test_log/checkpoint.tar
+************** EPOCH 008 **************
+2025-12-02 02:55:03.054409
+Current learning rate: [0.001]
+Current BN decay momentum: 0.500000
+--------------------
+train translation loss: 5.033429
+train rotation loss: 13.015676
+train vis loss: 4.088628
+train dist: 20.029274
+--------------------
+eval translation loss: 5.001003
+eval rotation loss: 12.814821
+eval vis loss: 3.632703
+eval dist: 19.865755
+Model saved in file: /workspace/PPR-Net-plus/logs/ppr/log1_batch8_scale3_test_log/checkpoint.tar
+************** EPOCH 009 **************
+2025-12-02 02:55:53.358407
+Current learning rate: [0.001]
+Current BN decay momentum: 0.500000
+--------------------
+train translation loss: 4.800724
+train rotation loss: 12.308359
+train vis loss: 3.922165
+train dist: 19.222544
+--------------------
+eval translation loss: 5.008342
+eval rotation loss: 13.402326
+eval vis loss: 3.856962
+eval dist: 19.726277
+Model saved in file: /workspace/PPR-Net-plus/logs/ppr/log1_batch8_scale3_test_log/checkpoint.tar
+************** EPOCH 010 **************
+2025-12-02 02:56:46.515095
+Current learning rate: [0.001]
+Current BN decay momentum: 0.500000
+--------------------
+train translation loss: 4.597898
+train rotation loss: 11.604178
+train vis loss: 3.886991
+train dist: 18.482747
+--------------------
+eval translation loss: 4.524568
+eval rotation loss: 10.734432
+eval vis loss: 3.521220
+eval dist: 18.247035
+Model saved in file: /workspace/PPR-Net-plus/logs/ppr/log1_batch8_scale3_test_log/checkpoint.tar
+************** EPOCH 011 **************
+2025-12-02 02:57:36.955777
+Current learning rate: [0.001]
+Current BN decay momentum: 0.500000
+--------------------
+train translation loss: 4.397832
+train rotation loss: 11.120693
+train vis loss: 3.833777
+train dist: 17.787541
+--------------------
+eval translation loss: 4.502301
+eval rotation loss: 10.919567
+eval vis loss: 3.267332
+eval dist: 18.096370
+Model saved in file: /workspace/PPR-Net-plus/logs/ppr/log1_batch8_scale3_test_log/checkpoint.tar
+************** EPOCH 012 **************
+2025-12-02 02:58:30.880114
+Current learning rate: [0.001]
+Current BN decay momentum: 0.500000
+--------------------
+train translation loss: 4.319533
+train rotation loss: 10.772603
+train vis loss: 3.672833
+train dist: 17.536949
+--------------------
+eval translation loss: 4.144619
+eval rotation loss: 9.926256
+eval vis loss: 3.529460
+eval dist: 16.874285
+Model saved in file: /workspace/PPR-Net-plus/logs/ppr/log1_batch8_scale3_test_log/checkpoint.tar
+************** EPOCH 013 **************
+2025-12-02 02:59:20.782486
+Current learning rate: [0.001]
+Current BN decay momentum: 0.500000
+--------------------
+train translation loss: 4.157170
+train rotation loss: 10.251477
+train vis loss: 3.556527
+train dist: 16.904181
+--------------------
+eval translation loss: 4.062963
+eval rotation loss: 9.212881
+eval vis loss: 3.697440
+eval dist: 16.595630
+Model saved in file: /workspace/PPR-Net-plus/logs/ppr/log1_batch8_scale3_test_log/checkpoint.tar
+************** EPOCH 014 **************
+2025-12-02 03:00:14.526231
+Current learning rate: [0.001]
+Current BN decay momentum: 0.500000
+--------------------
+train translation loss: 4.073978
+train rotation loss: 9.949929
+train vis loss: 3.505135
+train dist: 16.589305
+--------------------
+eval translation loss: 4.084750
+eval rotation loss: 9.442195
+eval vis loss: 3.175776
+eval dist: 16.534935
+Model saved in file: /workspace/PPR-Net-plus/logs/ppr/log1_batch8_scale3_test_log/checkpoint.tar
+************** EPOCH 015 **************
+2025-12-02 03:01:05.078442
+Current learning rate: [0.001]
+Current BN decay momentum: 0.500000
+--------------------
+train translation loss: 3.991205
+train rotation loss: 9.786400
+train vis loss: 3.497464
+train dist: 16.288312
+--------------------
+eval translation loss: 4.025761
+eval rotation loss: 9.070608
+eval vis loss: 3.588626
+eval dist: 16.420883
+Model saved in file: /workspace/PPR-Net-plus/logs/ppr/log1_batch8_scale3_test_log/checkpoint.tar
+************** EPOCH 016 **************
+2025-12-02 03:01:58.534653
+Current learning rate: [0.001]
+Current BN decay momentum: 0.500000
+--------------------
+train translation loss: 3.936457
+train rotation loss: 9.556643
+train vis loss: 3.287810
+train dist: 16.093752
+--------------------
+eval translation loss: 3.967486
+eval rotation loss: 8.569174
+eval vis loss: 2.996308
+eval dist: 16.186769
+Model saved in file: /workspace/PPR-Net-plus/logs/ppr/log1_batch8_scale3_test_log/checkpoint.tar
+************** EPOCH 017 **************
+2025-12-02 03:02:48.613695
+Current learning rate: [0.001]
+Current BN decay momentum: 0.500000
+--------------------
+train translation loss: 3.829280
+train rotation loss: 9.191470
+train vis loss: 3.227370
+train dist: 15.713194
+--------------------
+eval translation loss: 3.810492
+eval rotation loss: 8.601136
+eval vis loss: 2.869901
+eval dist: 15.561100
+Model saved in file: /workspace/PPR-Net-plus/logs/ppr/log1_batch8_scale3_test_log/checkpoint.tar
+************** EPOCH 018 **************
+2025-12-02 03:03:42.399974
+Current learning rate: [0.001]
+Current BN decay momentum: 0.500000
+--------------------
+train translation loss: 3.782342
+train rotation loss: 9.134094
+train vis loss: 3.334626
+train dist: 15.503775
+--------------------
+eval translation loss: 3.955941
+eval rotation loss: 9.388396
+eval vis loss: 3.071526
+eval dist: 16.064245
+Model saved in file: /workspace/PPR-Net-plus/logs/ppr/log1_batch8_scale3_test_log/checkpoint.tar
+************** EPOCH 019 **************
+2025-12-02 03:04:32.645930
+Current learning rate: [0.001]
+Current BN decay momentum: 0.500000
+--------------------
+train translation loss: 3.757520
+train rotation loss: 8.987400
+train vis loss: 3.252773
+train dist: 15.419643
+--------------------
+eval translation loss: 3.894336
+eval rotation loss: 8.089272
+eval vis loss: 3.002517
+eval dist: 15.670923
+Model saved in file: /workspace/PPR-Net-plus/logs/ppr/log1_batch8_scale3_test_log/checkpoint.tar
+************** EPOCH 020 **************
+2025-12-02 03:05:26.180805
+Current learning rate: [0.001]
+Current BN decay momentum: 0.500000
+--------------------
+train translation loss: 3.685098
+train rotation loss: 8.773567
+train vis loss: 3.230574
+train dist: 15.127570
+--------------------
+eval translation loss: 3.558340
+eval rotation loss: 8.192841
+eval vis loss: 3.059200
+eval dist: 14.772060
+Model saved in file: /workspace/PPR-Net-plus/logs/ppr/log1_batch8_scale3_test_log/checkpoint.tar
+************** EPOCH 021 **************
+2025-12-02 03:06:18.183111
+Current learning rate: [0.001]
+Current BN decay momentum: 0.500000
+--------------------
+train translation loss: 3.612198
+train rotation loss: 8.440694
+train vis loss: 3.075846
+train dist: 14.854891
+--------------------
+eval translation loss: 3.650026
+eval rotation loss: 8.495606
+eval vis loss: 3.060992
+eval dist: 15.218316
+Model saved in file: /workspace/PPR-Net-plus/logs/ppr/log1_batch8_scale3_test_log/checkpoint.tar
+************** EPOCH 022 **************
+2025-12-02 03:07:11.805513
+Current learning rate: [0.001]
+Current BN decay momentum: 0.500000
+--------------------
+train translation loss: 3.578482
+train rotation loss: 8.485665
+train vis loss: 3.057270
+train dist: 14.760830
+--------------------
+eval translation loss: 3.659120
+eval rotation loss: 8.309492
+eval vis loss: 2.898752
+eval dist: 15.090238
+Model saved in file: /workspace/PPR-Net-plus/logs/ppr/log1_batch8_scale3_test_log/checkpoint.tar
+************** EPOCH 023 **************
+2025-12-02 03:08:02.732758
+Current learning rate: [0.001]
+Current BN decay momentum: 0.500000
+--------------------
+train translation loss: 3.565059
+train rotation loss: 8.519458
+train vis loss: 3.060395
+train dist: 14.704779
+--------------------
+eval translation loss: 3.409750
+eval rotation loss: 7.358787
+eval vis loss: 2.892347
+eval dist: 14.170785
+Model saved in file: /workspace/PPR-Net-plus/logs/ppr/log1_batch8_scale3_test_log/checkpoint.tar
+************** EPOCH 024 **************
+2025-12-02 03:08:56.207069
+Current learning rate: [0.001]
+Current BN decay momentum: 0.500000
+--------------------
+train translation loss: 3.507413
+train rotation loss: 8.246904
+train vis loss: 2.964379
+train dist: 14.497860
+--------------------
+eval translation loss: 3.579265
+eval rotation loss: 7.709578
+eval vis loss: 2.834299
+eval dist: 14.779773
+Model saved in file: /workspace/PPR-Net-plus/logs/ppr/log1_batch8_scale3_test_log/checkpoint.tar
+************** EPOCH 025 **************
+2025-12-02 03:09:48.630781
+Current learning rate: [0.001]
+Current BN decay momentum: 0.500000
+--------------------
+train translation loss: 3.473057
+train rotation loss: 8.129042
+train vis loss: 2.876279
+train dist: 14.346026
+--------------------
+eval translation loss: 3.453090
+eval rotation loss: 7.907027
+eval vis loss: 3.060316
+eval dist: 14.253536
+Model saved in file: /workspace/PPR-Net-plus/logs/ppr/log1_batch8_scale3_test_log/checkpoint.tar
+************** EPOCH 026 **************
+2025-12-02 03:10:42.781906
+Current learning rate: [0.001]
+Current BN decay momentum: 0.500000
+--------------------
+train translation loss: 3.471207
+train rotation loss: 8.207277
+train vis loss: 2.920901
+train dist: 14.379900
+--------------------
+eval translation loss: 3.427093
+eval rotation loss: 7.834613
+eval vis loss: 3.013184
+eval dist: 14.222920
+Model saved in file: /workspace/PPR-Net-plus/logs/ppr/log1_batch8_scale3_test_log/checkpoint.tar
+************** EPOCH 027 **************
+2025-12-02 03:11:33.109515
+Current learning rate: [0.001]
+Current BN decay momentum: 0.500000
+--------------------
+train translation loss: 3.367635
+train rotation loss: 7.846727
+train vis loss: 2.753955
+train dist: 13.968670
+--------------------
+eval translation loss: 3.303105
+eval rotation loss: 6.988974
+eval vis loss: 2.638503
+eval dist: 13.715610
+Model saved in file: /workspace/PPR-Net-plus/logs/ppr/log1_batch8_scale3_test_log/checkpoint.tar
+************** EPOCH 028 **************
+2025-12-02 03:12:25.823946
+Current learning rate: [0.001]
+Current BN decay momentum: 0.500000
+--------------------
+train translation loss: 3.414759
+train rotation loss: 7.999821
+train vis loss: 2.744341
+train dist: 14.106995
+--------------------
+eval translation loss: 3.355792
+eval rotation loss: 7.057249
+eval vis loss: 2.801489
+eval dist: 13.937490
+Model saved in file: /workspace/PPR-Net-plus/logs/ppr/log1_batch8_scale3_test_log/checkpoint.tar
+************** EPOCH 029 **************
+2025-12-02 03:13:16.907634
+Current learning rate: [0.001]
+Current BN decay momentum: 0.500000
+--------------------
+train translation loss: 3.317409
+train rotation loss: 7.724792
+train vis loss: 2.728509
+train dist: 13.770397
+--------------------
+eval translation loss: 3.344074
+eval rotation loss: 6.905682
+eval vis loss: 2.770648
+eval dist: 13.718178
+Model saved in file: /workspace/PPR-Net-plus/logs/ppr/log1_batch8_scale3_test_log/checkpoint.tar
+************** EPOCH 030 **************
+2025-12-02 03:14:09.495595
+Current learning rate: [0.001]
+Current BN decay momentum: 0.500000
+--------------------
+train translation loss: 3.325973
+train rotation loss: 7.658243
+train vis loss: 2.772316
+train dist: 13.750758
+--------------------
+eval translation loss: 3.275655
+eval rotation loss: 7.036783
+eval vis loss: 2.904396
+eval dist: 13.703730
+Model saved in file: /workspace/PPR-Net-plus/logs/ppr/log1_batch8_scale3_test_log/checkpoint.tar
+************** EPOCH 031 **************
+2025-12-02 03:15:00.449489
+Current learning rate: [0.001]
+Current BN decay momentum: 0.500000
+--------------------
+train translation loss: 3.228974
+train rotation loss: 7.436859
+train vis loss: 2.592600
+train dist: 13.426556
+--------------------
+eval translation loss: 3.279827
+eval rotation loss: 7.437551
+eval vis loss: 2.548963
+eval dist: 13.600064
+Model saved in file: /workspace/PPR-Net-plus/logs/ppr/log1_batch8_scale3_test_log/checkpoint.tar
+************** EPOCH 032 **************
+2025-12-02 03:15:53.333067
+Current learning rate: [0.001]
+Current BN decay momentum: 0.500000
+--------------------
+train translation loss: 3.237136
+train rotation loss: 7.415598
+train vis loss: 2.664363
+train dist: 13.487818
+--------------------
+eval translation loss: 3.190918
+eval rotation loss: 7.407642
+eval vis loss: 2.538383
+eval dist: 13.313827
+Model saved in file: /workspace/PPR-Net-plus/logs/ppr/log1_batch8_scale3_test_log/checkpoint.tar
+************** EPOCH 033 **************
+2025-12-02 03:16:43.638316
+Current learning rate: [0.001]
+Current BN decay momentum: 0.500000
+--------------------
+train translation loss: 3.215216
+train rotation loss: 7.391088
+train vis loss: 2.594334
+train dist: 13.361224
+--------------------
+eval translation loss: 3.364908
+eval rotation loss: 7.040867
+eval vis loss: 2.600215
+eval dist: 13.973006
+Model saved in file: /workspace/PPR-Net-plus/logs/ppr/log1_batch8_scale3_test_log/checkpoint.tar
+************** EPOCH 034 **************
+2025-12-02 03:17:35.724017
+Current learning rate: [0.001]
+Current BN decay momentum: 0.500000
+--------------------
+train translation loss: 3.182866
+train rotation loss: 7.320386
+train vis loss: 2.577885
+train dist: 13.282051
+--------------------
+eval translation loss: 3.073713
+eval rotation loss: 6.467812
+eval vis loss: 2.321033
+eval dist: 12.828394
+Model saved in file: /workspace/PPR-Net-plus/logs/ppr/log1_batch8_scale3_test_log/checkpoint.tar
+************** EPOCH 035 **************
+2025-12-02 03:18:26.215401
+Current learning rate: [0.001]
+Current BN decay momentum: 0.500000
+--------------------
+train translation loss: 3.128295
+train rotation loss: 7.181261
+train vis loss: 2.462224
+train dist: 13.061687
+--------------------
+eval translation loss: 3.292645
+eval rotation loss: 7.062641
+eval vis loss: 2.585029
+eval dist: 13.611921
+Model saved in file: /workspace/PPR-Net-plus/logs/ppr/log1_batch8_scale3_test_log/checkpoint.tar
+************** EPOCH 036 **************
+2025-12-02 03:19:19.218078
+Current learning rate: [0.001]
+Current BN decay momentum: 0.500000
+--------------------
+train translation loss: 3.163855
+train rotation loss: 7.296385
+train vis loss: 2.507364
+train dist: 13.196384
+--------------------
+eval translation loss: 3.123839
+eval rotation loss: 6.723354
+eval vis loss: 2.371547
+eval dist: 13.129963
+Model saved in file: /workspace/PPR-Net-plus/logs/ppr/log1_batch8_scale3_test_log/checkpoint.tar
+************** EPOCH 037 **************
+2025-12-02 03:20:09.865271
+Current learning rate: [0.001]
+Current BN decay momentum: 0.500000
+--------------------
+train translation loss: 3.121047
+train rotation loss: 7.052057
+train vis loss: 2.500343
+train dist: 13.025006
+--------------------
+eval translation loss: 3.021076
+eval rotation loss: 6.460507
+eval vis loss: 2.532946
+eval dist: 12.643723
+Model saved in file: /workspace/PPR-Net-plus/logs/ppr/log1_batch8_scale3_test_log/checkpoint.tar
+************** EPOCH 038 **************
+2025-12-02 03:21:01.907628
+Current learning rate: [0.001]
+Current BN decay momentum: 0.500000
+--------------------
+train translation loss: 3.132635
+train rotation loss: 6.988182
+train vis loss: 2.505853
+train dist: 13.041156
+--------------------
+eval translation loss: 3.088985
+eval rotation loss: 6.141119
+eval vis loss: 2.502550
+eval dist: 12.846019
+Model saved in file: /workspace/PPR-Net-plus/logs/ppr/log1_batch8_scale3_test_log/checkpoint.tar
+************** EPOCH 039 **************
+2025-12-02 03:21:53.110773
+Current learning rate: [0.001]
+Current BN decay momentum: 0.500000
+--------------------
+train translation loss: 3.061334
+train rotation loss: 6.901512
+train vis loss: 2.473326
+train dist: 12.799443
+--------------------
+eval translation loss: 2.976885
+eval rotation loss: 6.064505
+eval vis loss: 2.815352
+eval dist: 12.403973
+Model saved in file: /workspace/PPR-Net-plus/logs/ppr/log1_batch8_scale3_test_log/checkpoint.tar
+************** EPOCH 040 **************
+2025-12-02 03:22:45.707267
+Current learning rate: [0.001]
+Current BN decay momentum: 0.500000
+--------------------
+train translation loss: 3.087254
+train rotation loss: 6.917347
+train vis loss: 2.484272
+train dist: 12.884840
+--------------------
+eval translation loss: 2.952851
+eval rotation loss: 6.172825
+eval vis loss: 2.627773
+eval dist: 12.346290
+Model saved in file: /workspace/PPR-Net-plus/logs/ppr/log1_batch8_scale3_test_log/checkpoint.tar
+************** EPOCH 041 **************
+2025-12-02 03:23:35.999918
+Current learning rate: [0.001]
+Current BN decay momentum: 0.500000
+--------------------
+train translation loss: 3.055818
+train rotation loss: 6.827588
+train vis loss: 2.343964
+train dist: 12.744695
+--------------------
+eval translation loss: 3.029197
+eval rotation loss: 6.609612
+eval vis loss: 2.743838
+eval dist: 12.756868
+Model saved in file: /workspace/PPR-Net-plus/logs/ppr/log1_batch8_scale3_test_log/checkpoint.tar
+************** EPOCH 042 **************
+2025-12-02 03:24:28.197121
+Current learning rate: [0.001]
+Current BN decay momentum: 0.500000
+--------------------
+train translation loss: 3.032282
+train rotation loss: 6.757179
+train vis loss: 2.442031
+train dist: 12.675528
+--------------------
+eval translation loss: 3.008597
+eval rotation loss: 6.426665
+eval vis loss: 2.221807
+eval dist: 12.578972
+Model saved in file: /workspace/PPR-Net-plus/logs/ppr/log1_batch8_scale3_test_log/checkpoint.tar
+************** EPOCH 043 **************
+2025-12-02 03:25:19.731345
+Current learning rate: [0.001]
+Current BN decay momentum: 0.500000
+--------------------
+train translation loss: 2.987131
+train rotation loss: 6.715536
+train vis loss: 2.347850
+train dist: 12.485379
+--------------------
+eval translation loss: 3.050724
+eval rotation loss: 6.091229
+eval vis loss: 2.481719
+eval dist: 12.681675
+Model saved in file: /workspace/PPR-Net-plus/logs/ppr/log1_batch8_scale3_test_log/checkpoint.tar
+************** EPOCH 044 **************
+2025-12-02 03:26:12.715583
+Current learning rate: [0.001]
+Current BN decay momentum: 0.500000
+--------------------
+train translation loss: 2.987934
+train rotation loss: 6.615240
+train vis loss: 2.421677
+train dist: 12.492476
+--------------------
+eval translation loss: 2.971561
+eval rotation loss: 6.076764
+eval vis loss: 2.735805
+eval dist: 12.434276
+Model saved in file: /workspace/PPR-Net-plus/logs/ppr/log1_batch8_scale3_test_log/checkpoint.tar
+************** EPOCH 045 **************
+2025-12-02 03:27:02.444843
+Current learning rate: [0.001]
+Current BN decay momentum: 0.500000
+--------------------
+train translation loss: 2.966659
+train rotation loss: 6.617656
+train vis loss: 2.349735
+train dist: 12.407172
+--------------------
+eval translation loss: 2.985183
+eval rotation loss: 6.117036
+eval vis loss: 2.205917
+eval dist: 12.586607
+Model saved in file: /workspace/PPR-Net-plus/logs/ppr/log1_batch8_scale3_test_log/checkpoint.tar
+************** EPOCH 046 **************
+2025-12-02 03:27:55.088969
+Current learning rate: [0.001]
+Current BN decay momentum: 0.500000
+--------------------
+train translation loss: 2.976578
+train rotation loss: 6.641253
+train vis loss: 2.411449
+train dist: 12.433731
+--------------------
+eval translation loss: 2.915686
+eval rotation loss: 6.121626
+eval vis loss: 2.302492
+eval dist: 12.209804
+Model saved in file: /workspace/PPR-Net-plus/logs/ppr/log1_batch8_scale3_test_log/checkpoint.tar
+************** EPOCH 047 **************
+2025-12-02 03:28:46.164942
+Current learning rate: [0.001]
+Current BN decay momentum: 0.500000
+--------------------
+train translation loss: 2.985494
+train rotation loss: 6.858385
+train vis loss: 2.362280
+train dist: 12.436078
+--------------------
+eval translation loss: 3.113462
+eval rotation loss: 7.164856
+eval vis loss: 2.288971
+eval dist: 12.963302
+Model saved in file: /workspace/PPR-Net-plus/logs/ppr/log1_batch8_scale3_test_log/checkpoint.tar
+************** EPOCH 048 **************
+2025-12-02 03:29:39.622519
+Current learning rate: [0.001]
+Current BN decay momentum: 0.500000
+--------------------
+train translation loss: 2.940580
+train rotation loss: 6.533507
+train vis loss: 2.351823
+train dist: 12.332303
+--------------------
+eval translation loss: 2.842144
+eval rotation loss: 5.880853
+eval vis loss: 2.185212
+eval dist: 11.967685
+Model saved in file: /workspace/PPR-Net-plus/logs/ppr/log1_batch8_scale3_test_log/checkpoint.tar
+************** EPOCH 049 **************
+2025-12-02 03:30:30.038181
+Current learning rate: [0.001]
+Current BN decay momentum: 0.500000
+--------------------
+train translation loss: 2.897847
+train rotation loss: 6.303217
+train vis loss: 2.282699
+train dist: 12.124380
+--------------------
+eval translation loss: 2.843845
+eval rotation loss: 5.770162
+eval vis loss: 2.178579
+eval dist: 11.989093
+Model saved in file: /workspace/PPR-Net-plus/logs/ppr/log1_batch8_scale3_test_log/checkpoint.tar
+************** EPOCH 050 **************
+2025-12-02 03:31:22.550696
+Current learning rate: [0.001]
+Current BN decay momentum: 0.500000
+--------------------
+train translation loss: 2.894102
+train rotation loss: 6.338613
+train vis loss: 2.314864
+train dist: 12.113554
+--------------------
+eval translation loss: 2.987318
+eval rotation loss: 6.247977
+eval vis loss: 3.101312
+eval dist: 12.481091
+Model saved in file: /workspace/PPR-Net-plus/logs/ppr/log1_batch8_scale3_test_log/checkpoint.tar
+************** EPOCH 051 **************
+2025-12-02 03:32:12.589724
+Current learning rate: [0.001]
+Current BN decay momentum: 0.500000
+--------------------
+train translation loss: 2.882618
+train rotation loss: 6.273769
+train vis loss: 2.250096
+train dist: 12.083103
+--------------------
+eval translation loss: 2.959696
+eval rotation loss: 5.829037
+eval vis loss: 2.090020
+eval dist: 12.400971
+Model saved in file: /workspace/PPR-Net-plus/logs/ppr/log1_batch8_scale3_test_log/checkpoint.tar
+************** EPOCH 052 **************
+2025-12-02 03:33:05.005194
+Current learning rate: [0.001]
+Current BN decay momentum: 0.500000
+--------------------
+train translation loss: 2.866083
+train rotation loss: 6.290651
+train vis loss: 2.239787
+train dist: 12.043567
+--------------------
+eval translation loss: 2.782592
+eval rotation loss: 5.523342
+eval vis loss: 2.144867
+eval dist: 11.668936
+Model saved in file: /workspace/PPR-Net-plus/logs/ppr/log1_batch8_scale3_test_log/checkpoint.tar
+************** EPOCH 053 **************
+2025-12-02 03:33:56.093834
+Current learning rate: [0.001]
+Current BN decay momentum: 0.500000
+--------------------
+train translation loss: 2.837538
+train rotation loss: 6.153667
+train vis loss: 2.282082
+train dist: 11.912788
+--------------------
+eval translation loss: 2.811950
+eval rotation loss: 5.697080
+eval vis loss: 2.829679
+eval dist: 11.843019
+Model saved in file: /workspace/PPR-Net-plus/logs/ppr/log1_batch8_scale3_test_log/checkpoint.tar
+************** EPOCH 054 **************
+2025-12-02 03:34:48.511739
+Current learning rate: [0.001]
+Current BN decay momentum: 0.500000
+--------------------
+train translation loss: 2.882875
+train rotation loss: 6.363018
+train vis loss: 2.287557
+train dist: 12.067697
+--------------------
+eval translation loss: 2.765617
+eval rotation loss: 5.559744
+eval vis loss: 2.225750
+eval dist: 11.622959
+Model saved in file: /workspace/PPR-Net-plus/logs/ppr/log1_batch8_scale3_test_log/checkpoint.tar
 ************** EPOCH 055 **************
-2025-11-13 12:06:20.878311
+2025-12-02 03:35:38.353566
+Current learning rate: [0.001]
+Current BN decay momentum: 0.500000
+--------------------
+train translation loss: 2.831714
+train rotation loss: 6.167220
+train vis loss: 2.232806
+train dist: 11.886281
+--------------------
+eval translation loss: 2.807233
+eval rotation loss: 5.769915
+eval vis loss: 2.193535
+eval dist: 11.788046
+Model saved in file: /workspace/PPR-Net-plus/logs/ppr/log1_batch8_scale3_test_log/checkpoint.tar
+************** EPOCH 056 **************
+2025-12-02 03:36:31.406579
+Current learning rate: [0.001]
+Current BN decay momentum: 0.500000
+--------------------
+train translation loss: 2.836554
+train rotation loss: 6.062448
+train vis loss: 2.227596
+train dist: 11.893724
+--------------------
+eval translation loss: 2.711503
+eval rotation loss: 5.622628
+eval vis loss: 2.212536
+eval dist: 11.395835
+Model saved in file: /workspace/PPR-Net-plus/logs/ppr/log1_batch8_scale3_test_log/checkpoint.tar
+************** EPOCH 057 **************
+2025-12-02 03:37:22.351772
+Current learning rate: [0.001]
+Current BN decay momentum: 0.500000
+--------------------
+train translation loss: 2.778159
+train rotation loss: 5.899322
+train vis loss: 2.179416
+train dist: 11.676862
+--------------------
+eval translation loss: 2.740224
+eval rotation loss: 5.286816
+eval vis loss: 2.024143
+eval dist: 11.494491
+Model saved in file: /workspace/PPR-Net-plus/logs/ppr/log1_batch8_scale3_test_log/checkpoint.tar
+************** EPOCH 058 **************
+2025-12-02 03:38:15.117128
+Current learning rate: [0.001]
+Current BN decay momentum: 0.500000
+--------------------
+train translation loss: 2.824395
+train rotation loss: 6.107823
+train vis loss: 2.234455
+train dist: 11.812615
+--------------------
+eval translation loss: 2.798432
+eval rotation loss: 5.762741
+eval vis loss: 2.458855
+eval dist: 11.617271
+Model saved in file: /workspace/PPR-Net-plus/logs/ppr/log1_batch8_scale3_test_log/checkpoint.tar
+************** EPOCH 059 **************
+2025-12-02 03:39:06.018475
+Current learning rate: [0.001]
+Current BN decay momentum: 0.500000
+--------------------
+train translation loss: 2.791221
+train rotation loss: 6.043558
+train vis loss: 2.183364
+train dist: 11.699368
+--------------------
+eval translation loss: 2.659446
+eval rotation loss: 5.179290
+eval vis loss: 1.907538
+eval dist: 11.257944
+Model saved in file: /workspace/PPR-Net-plus/logs/ppr/log1_batch8_scale3_test_log/checkpoint.tar
+************** EPOCH 060 **************
+2025-12-02 03:39:58.741487
+Current learning rate: [0.001]
+Current BN decay momentum: 0.500000
+--------------------
+train translation loss: 2.797615
+train rotation loss: 6.155831
+train vis loss: 2.190643
+train dist: 11.764880
+--------------------
+eval translation loss: 2.813774
+eval rotation loss: 5.819743
+eval vis loss: 2.173331
+eval dist: 11.762867
+Model saved in file: /workspace/PPR-Net-plus/logs/ppr/log1_batch8_scale3_test_log/checkpoint.tar
+************** EPOCH 061 **************
+2025-12-02 03:40:48.776658
+Current learning rate: [0.001]
+Current BN decay momentum: 0.500000
+--------------------
+train translation loss: 2.779819
+train rotation loss: 5.997423
+train vis loss: 2.156896
+train dist: 11.692757
+--------------------
+eval translation loss: 2.666986
+eval rotation loss: 5.451077
+eval vis loss: 2.252443
+eval dist: 11.284853
+Model saved in file: /workspace/PPR-Net-plus/logs/ppr/log1_batch8_scale3_test_log/checkpoint.tar
+************** EPOCH 062 **************
+2025-12-02 03:41:41.104418
+Current learning rate: [0.001]
+Current BN decay momentum: 0.500000
+--------------------
+train translation loss: 2.757727
+train rotation loss: 5.938699
+train vis loss: 2.198985
+train dist: 11.584028
+--------------------
+eval translation loss: 2.679741
+eval rotation loss: 5.138783
+eval vis loss: 1.959861
+eval dist: 11.237116
+Model saved in file: /workspace/PPR-Net-plus/logs/ppr/log1_batch8_scale3_test_log/checkpoint.tar
+************** EPOCH 063 **************
+2025-12-02 03:42:31.459500
+Current learning rate: [0.001]
+Current BN decay momentum: 0.500000
+--------------------
+train translation loss: 2.731949
+train rotation loss: 5.801209
+train vis loss: 2.102697
+train dist: 11.493921
+--------------------
+eval translation loss: 2.679350
+eval rotation loss: 5.425262
+eval vis loss: 2.267277
+eval dist: 11.420179
+Model saved in file: /workspace/PPR-Net-plus/logs/ppr/log1_batch8_scale3_test_log/checkpoint.tar
+************** EPOCH 064 **************
+2025-12-02 03:43:24.383664
+Current learning rate: [0.001]
+Current BN decay momentum: 0.500000
+--------------------
+train translation loss: 2.746463
+train rotation loss: 5.830680
+train vis loss: 2.157605
+train dist: 11.542384
+--------------------
+eval translation loss: 2.748533
+eval rotation loss: 5.484163
+eval vis loss: 2.096893
+eval dist: 11.542850
+Model saved in file: /workspace/PPR-Net-plus/logs/ppr/log1_batch8_scale3_test_log/checkpoint.tar
+************** EPOCH 065 **************
+2025-12-02 03:44:15.016386
+Current learning rate: [0.001]
+Current BN decay momentum: 0.500000
+--------------------
+train translation loss: 2.737267
+train rotation loss: 5.842087
+train vis loss: 2.089850
+train dist: 11.481278
+--------------------
+eval translation loss: 2.823365
+eval rotation loss: 5.735301
+eval vis loss: 2.225910
+eval dist: 11.724421
+Model saved in file: /workspace/PPR-Net-plus/logs/ppr/log1_batch8_scale3_test_log/checkpoint.tar
+************** EPOCH 066 **************
+2025-12-02 03:45:07.461360
+Current learning rate: [0.001]
+Current BN decay momentum: 0.500000
+--------------------
+train translation loss: 2.714143
+train rotation loss: 5.787559
+train vis loss: 2.069840
+train dist: 11.408186
+--------------------
+eval translation loss: 2.627079
+eval rotation loss: 5.311967
+eval vis loss: 1.882488
+eval dist: 11.108121
+Model saved in file: /workspace/PPR-Net-plus/logs/ppr/log1_batch8_scale3_test_log/checkpoint.tar
+************** EPOCH 067 **************
+2025-12-02 03:45:57.831398
 Current learning rate: [0.001]
 Current BN decay momentum: 0.500000
 --------------------

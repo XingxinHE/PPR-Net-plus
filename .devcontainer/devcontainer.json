@@ -1,0 +1,68 @@
+// For format details, see https://aka.ms/devcontainer.json. For config options, see the
+// README at: https://github.com/devcontainers/templates/tree/main/src/ubuntu
+{
+	"name": "ppr-net",
+	// Or use a Dockerfile or Docker Compose file. More info: https://containers.dev/guide/dockerfile
+	"image": "nvcr.io/nvidia/cuda:12.8.0-cudnn-devel-ubuntu24.04",
+
+	// Features to add to the dev container. More info: https://containers.dev/features.
+	"features": {
+		"ghcr.io/devcontainers/features/common-utils:2": {
+			"username": "ubuntu",
+			"userUid": "1000",
+			"userGid": "1000",
+			"configureZshAsDefaultShell": false
+		},
+		"ghcr.io/jsburckhardt/devcontainer-features/uv:1": {},
+    "ghcr.io/xingxinhe/devcontainer-features/zivid:latest": {}
+	},
+
+	"workspaceFolder": "/workspace/${localWorkspaceFolderBasename}",
+  "mounts": [
+    "source=${localWorkspaceFolder},target=/workspace/${localWorkspaceFolderBasename},type=bind,consistency=cached",
+    "source=/dev,target=/dev,type=bind",
+    "source=/media,target=/media,type=bind",
+    "source=local-uv,target=/home/ubuntu/.local,type=volume",
+    "source=cache-uv,target=/home/ubuntu/.cache,type=volume",
+		"source=/tmp/.X11-unix,target=/tmp/.X11-unix,type=bind,consistency=cached",
+    "source=${localEnv:XAUTHORITY},target=/root/.Xauthority,type=bind,consistency=cached"
+  ],
+	"privileged": true,
+  "postCreateCommand": "sudo chown -R ubuntu:ubuntu /home/ubuntu/.local /home/ubuntu/.cache",
+	//"runArgs": ["--env=DISPLAY=${localEnv:DISPLAY}"],
+	"runArgs": [
+    "--network=host",
+    "--gpus=all",
+    "--name=ppr-net",
+    "--device=/dev/video0:/dev/video0",
+    "--device=/dev/video1:/dev/video1",
+    "--device=/dev/video2:/dev/video2",
+    "--device=/dev/video3:/dev/video3",
+    "--device=/dev/video4:/dev/video4",
+    "--device=/dev/video5:/dev/video5",
+    "--device=/dev/video6:/dev/video6",
+    "--device=/dev/video7:/dev/video7",
+    "--device=/dev/video8:/dev/video8",
+    "--device=/dev/video9:/dev/video9",
+    "--device=/dev/video10:/dev/video10",
+    "--device=/dev/video11:/dev/video11"
+  ],
+	"containerEnv": {
+    "QT_X11_NO_MITSHM": "1",
+    "DISPLAY": "${localEnv:DISPLAY}",
+    "NVIDIA_VISIBLE_DEVICES": "all",
+    "NVIDIA_DRIVER_CAPABILITIES": "all"
+  },
+
+	// Use 'forwardPorts' to make a list of ports inside the container available locally.
+	// "forwardPorts": [],
+
+	// Use 'postCreateCommand' to run commands after the container is created.
+	// "postCreateCommand": "uname -a",
+
+	// Configure tool-specific properties.
+	// "customizations": {},
+
+	// Uncomment to connect as root instead. More info: https://aka.ms/dev-containers-non-root.
+	"remoteUser": "ubuntu"
+}

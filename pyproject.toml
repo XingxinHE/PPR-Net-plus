@@ -23,13 +23,14 @@ dependencies = [
     "wandb",
     "h5py",
     "tqdm",
-    "opencv-python",
     "scikit-learn",
     "hydra-core==0.11.3",
     "pytorch-lightning==0.7.1",
     "warp-lang==1.10.0",
     "nibabel",
-    "fpsample"
+    "fpsample",
+    "opencv-python-headless>=4.11.0.86",
+    "ur-rtde>=1.6.2",
 ]
 
 description = "A package for conducting research using robots for assembly"
@@ -54,14 +55,14 @@ Homepage = "https://github.com/kiki007/LearningToAssemble"
 Issues = "https://github.com/kiki007/LearningToAssemble/issues"
 
 [[tool.uv.index]]
-name = "pytorch-cu126"
-url = "https://download.pytorch.org/whl/cu126"
+name = "pytorch-cu128"
+url = "https://download.pytorch.org/whl/cu128"
 explicit = true
 
 [tool.uv.sources]
 torch = [
-  { index = "pytorch-cu126", marker = "sys_platform == 'linux' or sys_platform == 'win32'" },
+  { index = "pytorch-cu128", marker = "sys_platform == 'linux' or sys_platform == 'win32'" },
 ]
 torchvision = [
-  { index = "pytorch-cu126", marker = "sys_platform == 'linux' or sys_platform == 'win32'" },
+  { index = "pytorch-cu128", marker = "sys_platform == 'linux' or sys_platform == 'win32'" },
 ]
