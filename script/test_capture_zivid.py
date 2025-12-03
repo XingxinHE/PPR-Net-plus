@@ -50,8 +50,16 @@ def transform_to_ur(rtde_r, points_sampled):
 
     # Hand-Eye Calibration (EE -> Camera)
     # TODO: Replace with actual calibration
-    # Placeholder: Identity (Camera is at EE origin)
-    t_ee_cam = np.eye(4)
+    # If Eye-in-Hand: Transform from Camera to End-Effector
+    # If Eye-to-Hand: Transform from Camera to Base (and t_base_ee might not be needed in the same way)
+    # Current assumption: Eye-in-Hand
+    # Example: 
+    # t_ee_cam = np.array([[ 0.0, -1.0,  0.0,  0.05],
+    #                      [ 1.0,  0.0,  0.0, -0.02],
+    #                      [ 0.0,  0.0,  1.0,  0.10],
+    #                      [ 0.0,  0.0,  0.0,  1.0 ]])
+    t_ee_cam = np.eye(4) # <--- UPDATE THIS MATRIX
+    print("WARNING: Using Identity matrix for Hand-Eye Calibration. Please update 't_ee_cam'.")
 
     # Base -> Camera
     t_base_cam = t_base_ee @ t_ee_cam
@@ -207,9 +215,17 @@ device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 input_points = input_points.to(device)
 
 # Define Model
+# Symmetry: The 'T' shape is a flat block.
+# It has 180-degree symmetry by flipping over the Y-axis (assuming Y is the stem/up direction of the T).
+# G matrices: [Identity, Rot_Y_180]
+G_sym = [
+    [[1, 0, 0], [0, 1, 0], [0, 0, 1]], # Identity
+    [[-1, 0, 0], [0, 1, 0], [0, 0, -1]] # 180 deg around Y (Flip)
+]
+
 type_teris = ObjectType(type_name='teris', class_idx=0, symmetry_type='finite',
                         lambda_p=[[0.039965, 0.0, 0.0], [0.0, 0.028565, 0.0], [0.0, 0.0, 0.018634]],
-                        G=[[[1, 0, 0], [0, 1, 0], [0, 0, 1]]])
+                        G=G_sym)
 
 backbone_config = {
     'npoint_per_layer': [4096, 1024, 256, 64],

@@ -195,9 +195,14 @@ if __name__=='__main__':
     device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 
     # Calculated lambda for Teris object
+    # Symmetry: 180-degree rotation around Y-axis (Flip)
+    G_sym = [
+        [[1, 0, 0], [0, 1, 0], [0, 0, 1]], # Identity
+        [[-1, 0, 0], [0, 1, 0], [0, 0, -1]] # 180 deg around Y
+    ]
     type_teris = ObjectType(type_name='teris', class_idx=0, symmetry_type='finite',
                             lambda_p=[[0.039965, 0.0, 0.0], [0.0, 0.028565, 0.0], [0.0, 0.0, 0.018634]],
-                            G=[[[1, 0, 0], [0, 1, 0], [0, 0, 1]]])
+                            G=G_sym)
 
     backbone_config = {
         'npoint_per_layer': [4096, 1024, 256, 64],
