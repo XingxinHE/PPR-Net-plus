@@ -13,6 +13,8 @@ def load_dataset_by_cycle(data_path, cycle_idx_list, scene_idx_list, num_point_i
         for scene_id in scene_idx_list:
             try:
                 h5_file_name = os.path.join(data_path, 'train', 'cycle_{:0>4}'.format(cycle_id), '{:0>3}.h5'.format(scene_id))
+                if not os.path.exists(h5_file_name):
+                    h5_file_name = os.path.join(data_path, 'cycle_{:0>4}'.format(cycle_id), '{:0>3}.h5'.format(scene_id))
 
                 f = h5py.File(h5_file_name, "r")
                 data_list.append(f['data'][:].reshape(1, num_point_in_h5, 3))

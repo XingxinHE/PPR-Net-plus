@@ -31,6 +31,7 @@ dependencies = [
     "fpsample",
     "opencv-python-headless>=4.11.0.86",
     "ur-rtde>=1.6.2",
+    "zivid>=2.17.1",
 ]
 
 description = "A package for conducting research using robots for assembly"

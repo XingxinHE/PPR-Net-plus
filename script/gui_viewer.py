@@ -2,11 +2,14 @@ import polyscope as ps
 import torch
 import numpy as np
 import trimesh
+import os
 
+import sys
+sys.path.insert(0, os.path.dirname(os.path.dirname(__file__)))
 from pprnet.data.IPA_pose_dataset import IPAPoseDataset
 from pprnet import ROOT_DIR
 from torchvision import transforms
-DATASET_DIR = f'E:\\h5_dataset\\bunny\\'
+DATASET_DIR = f'/workspace/PPR-Net-plus/dataset/bunny_h5'
 from pprnet.data.pointcloud_transforms import PointCloudShuffle, ToTensor
 
 from pprnet.pprnet import PPRNet, load_checkpoint, save_checkpoint

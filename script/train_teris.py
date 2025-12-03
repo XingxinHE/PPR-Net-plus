@@ -1,6 +1,7 @@
 import os
 from datetime import datetime
-
+import sys
+sys.path.insert(0, os.path.dirname(os.path.dirname(__file__)))
 import numpy as np
 import torch
 import torch.nn as nn
@@ -21,7 +22,7 @@ from time import perf_counter
 def train_one_epoch(loader):
     logger.log_string('--------------------')
     net.train() # set model to training mode
-    
+
     total_batch = 0
     total_seen = 0
     loss_sum = 0
@@ -73,7 +74,7 @@ def train_one_epoch(loader):
 def eval_one_epoch(loader):
     logger.log_string('--------------------')
     net.eval() # set model to eval mode
-    
+
     total_batch = 0
     total_seen = 0
     loss_sum = 0
@@ -173,10 +174,10 @@ if __name__=='__main__':
     DATASET_DIR = r'/workspace/PPR-Net-plus/dataset/teris/h5'
     TRAIN_DATA_HOLD_EPOCH = 2
     # Only cycle 1 exists currently
-    TRAIN_CYCLE_RANGES = [[1, 2]] 
+    TRAIN_CYCLE_RANGES = [[1, 30], [31, 60], [61, 90], [91, 120]]
     # Scenes 001, 002, 003 exist
-    TRAIN_SCENE_RANGE = [1, 4]
-    TEST_CYCLE_RANGE = [1, 2]
+    TRAIN_SCENE_RANGE = [1, 8]
+    TEST_CYCLE_RANGE = [121, 150]
     TEST_SCENE_RANGE = TRAIN_SCENE_RANGE
     # train setting
     EVAL_STAP = 1  # run evaluation after training EVAL_STAP epoch(s)
@@ -192,7 +193,7 @@ if __name__=='__main__':
 
     # build net and optimizer( and load if CHECKPOINT_PATH is not None )
     device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
-    
+
     # Calculated lambda for Teris object
     type_teris = ObjectType(type_name='teris', class_idx=0, symmetry_type='finite',
                             lambda_p=[[0.039965, 0.0, 0.0], [0.0, 0.028565, 0.0], [0.0, 0.0, 0.018634]],

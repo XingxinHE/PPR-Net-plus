@@ -1,4 +1,7 @@
 import os
+import sys
+sys.path.insert(0, os.path.dirname(os.path.dirname(__file__)))
+
 from datetime import datetime
 
 import numpy as np
@@ -21,7 +24,7 @@ from time import perf_counter
 def train_one_epoch(loader):
     logger.log_string('--------------------')
     net.train() # set model to training mode
-    
+
     total_batch = 0
     total_seen = 0
     loss_sum = 0
@@ -73,7 +76,7 @@ def train_one_epoch(loader):
 def eval_one_epoch(loader):
     logger.log_string('--------------------')
     net.eval() # set model to eval mode
-    
+
     total_batch = 0
     total_seen = 0
     loss_sum = 0
@@ -153,7 +156,8 @@ if __name__=='__main__':
     # log setting
     PROJECT_NAME = "ppr"
     LOG_NAME = 'log1_batch8_scale3_test_log'
-    CHECKPOINT_PATH = os.path.join(ROOT_DIR, 'logs', PROJECT_NAME, "log0_batch8_scale3_test_log", "checkpoint.tar")  # str or None, if is not None, model will continue to train from CHECKPOINT_PATH
+    #CHECKPOINT_PATH = os.path.join(ROOT_DIR, 'logs', PROJECT_NAME, "log0_batch8_scale3_test_log", "checkpoint.tar")  # str or None, if is not None, model will continue to train from CHECKPOINT_PATH
+    CHECKPOINT_PATH = None
     # lr decay
     BASE_LEARNING_RATE = 0.001
     LR_DECAY_RATE = 0.7
@@ -169,9 +173,9 @@ if __name__=='__main__':
     BN_DECAY_RATE = 0.5
     BN_LAMBDA = lambda epoch: max(BN_MOMENTUM_INIT * BN_DECAY_RATE ** (int(epoch / BN_DECAY_STEP)), BN_MOMENTUM_MIN)
     # dataset settings
-    DATASET_DIR = f'E:\\h5_dataset\\bunny\\'
+    DATASET_DIR = f'/workspace/PPR-Net-plus/dataset/bunny_h5'
     TRAIN_DATA_HOLD_EPOCH = 2
-    TRAIN_CYCLE_RANGES = [[1, 60], [61, 120], [121, 180], [181, 240]]
+    TRAIN_CYCLE_RANGES = [[230, 240], [240, 250], [230, 240], [240, 250]]
     TRAIN_SCENE_RANGE = [3, 81]
     TEST_CYCLE_RANGE = [240, 250]
     TEST_SCENE_RANGE = TRAIN_SCENE_RANGE
