@@ -53,7 +53,7 @@ def transform_to_ur(rtde_r, points_sampled):
     # If Eye-in-Hand: Transform from Camera to End-Effector
     # If Eye-to-Hand: Transform from Camera to Base (and t_base_ee might not be needed in the same way)
     # Current assumption: Eye-in-Hand
-    # Example: 
+    # Example:
     # t_ee_cam = np.array([[ 0.0, -1.0,  0.0,  0.05],
     #                      [ 1.0,  0.0,  0.0, -0.02],
     #                      [ 0.0,  0.0,  1.0,  0.10],
@@ -220,7 +220,7 @@ input_points = input_points.to(device)
 # G matrices: [Identity, Rot_Y_180]
 G_sym = [
     [[1, 0, 0], [0, 1, 0], [0, 0, 1]], # Identity
-    [[-1, 0, 0], [0, 1, 0], [0, 0, -1]] # 180 deg around Y (Flip)
+    #[[-1, 0, 0], [0, 1, 0], [0, 0, -1]] # 180 deg around Y (Flip)
 ]
 
 type_teris = ObjectType(type_name='teris', class_idx=0, symmetry_type='finite',
@@ -275,18 +275,18 @@ with torch.no_grad():
     # -----------------------------------------------------------------------------
     # Convert back from Network Frame (X-Left, Y-Up) to Standard Frame (X-Right, Y-Down)
 
-    # Translation: Flip X and Y
-    pred_trans_val[:, 0] = -pred_trans_val[:, 0]
-    pred_trans_val[:, 1] = -pred_trans_val[:, 1]
+    # # Translation: Flip X and Y
+    # pred_trans_val[:, 0] = -pred_trans_val[:, 0]
+    # pred_trans_val[:, 1] = -pred_trans_val[:, 1]
 
-    # Rotation: R_std = T_flip @ R_net
-    T_flip = np.diag([-1.0, -1.0, 1.0])
-    # Use broadcasting: (3, 3) @ (N, 3, 3) -> (N, 3, 3)
-    pred_mat_val = np.matmul(T_flip, pred_mat_val)
+    # # Rotation: R_std = T_flip @ R_net
+    # T_flip = np.diag([-1.0, -1.0, 1.0])
+    # # Use broadcasting: (3, 3) @ (N, 3, 3) -> (N, 3, 3)
+    # pred_mat_val = np.matmul(T_flip, pred_mat_val)
 
-    # Input points for visualization also need to be flipped back
-    points_sampled_mm[:, 0] = -points_sampled_mm[:, 0]
-    points_sampled_mm[:, 1] = -points_sampled_mm[:, 1]
+    # # Input points for visualization also need to be flipped back
+    # points_sampled_mm[:, 0] = -points_sampled_mm[:, 0]
+    # points_sampled_mm[:, 1] = -points_sampled_mm[:, 1]
 
 # -----------------------------------------------------------------------------
 # 5. Post-processing and Visualization
@@ -387,6 +387,106 @@ else:
 
         group.set_hide_descendants_from_structure_lists(True)
         group.set_show_child_details(False)
+    else:
+        print(f"Mesh not found at {mesh_path}")
+
+
+    # A new approach.
+    mesh_path = os.path.join(ROOT_DIR, 'models', 'T.obj')
+    if os.path.exists(mesh_path):
+        teris_mesh = trimesh.load(mesh_path)
+        group_refined = ps.create_group("teris_refined")
+        group_inside_pts = ps.create_group("inside_pts")
+        group_sample_points = ps.create_group("sample_points")
+
+        # Convert input points to meters for processing
+        all_points_m = input_point.copy() / 1000.0
+
+        import open3d as o3d
+
+        for cluster_id in range(n_clusters):
+            rot_mat = cluster_mat_pred[cluster_id]
+            center = cluster_center_pred[cluster_id]
+
+            # Initial Transform (Network Prediction)
+            T = np.eye(4)
+            T[:3, :3] = rot_mat
+            T[:3, 3] = center / 1000.0 # Convert mm to meters
+
+            copy_teris = teris_mesh.copy()
+            copy_teris.apply_transform(T)
+
+            # Get bounding sphere of the transformed mesh
+            # trimesh.bounding_sphere returns a Sphere primitive
+            sphere = copy_teris.bounding_sphere
+            sphere_center = sphere.primitive.center
+            sphere_radius = sphere.primitive.radius
+
+            # Crop points inside the bounding sphere (with a small margin)
+            # Calculate distances from sphere center
+            dists = np.linalg.norm(all_points_m - sphere_center, axis=1)
+            mask = dists < (sphere_radius * 1.2) # 20% margin
+            inside_pts = all_points_m[mask]
+
+            if len(inside_pts) < 10:
+                print(f"Cluster {cluster_id}: Not enough points inside bounding sphere for ICP.")
+                # Fallback to original prediction
+                obj = ps.register_surface_mesh(f"teris_refined {cluster_id}", copy_teris.vertices, copy_teris.faces, color = color_cluster[cluster_id] / 255.0)
+                obj.add_to_group(group_refined)
+                continue
+
+            # Visualize used points
+            inside_pts_pcl = ps.register_point_cloud(name = f"inside_pts_{cluster_id}", points=inside_pts)
+            inside_pts_pcl.add_to_group(group_inside_pts)
+
+            # ICP Registration
+            # Source: Mesh Vertices (from predicted pose)
+            # Target: Observed Points (inside sphere)
+
+            # Sample points from the mesh surface for better ICP
+            samples, face_indices = trimesh.sample.sample_surface(copy_teris, 5000)
+
+            # Filter for camera-facing points (normals pointing towards camera)
+            # Camera looks down +Z axis. Visible normals point roughly -Z.
+            normals = copy_teris.face_normals[face_indices]
+            mask = normals[:, 2] < -0.2
+            visible_samples = samples[mask]
+
+            if len(visible_samples) > 100:
+                samples = visible_samples
+
+            inside_pts_pcl = ps.register_point_cloud(name = f"samples_pts_{cluster_id}", points=samples)
+            inside_pts_pcl.add_to_group(group_sample_points)
+
+            pcd_source = o3d.geometry.PointCloud()
+            pcd_source.points = o3d.utility.Vector3dVector(samples)
+
+            pcd_target = o3d.geometry.PointCloud()
+            pcd_target.points = o3d.utility.Vector3dVector(inside_pts)
+
+            # Initial guess is Identity because source is already transformed to T
+            threshold = 0.005 # 0.5 cm distance threshold
+
+            try:
+                icp_result = o3d.pipelines.registration.registration_icp(
+                    pcd_source, pcd_target, threshold, np.eye(4),
+                    o3d.pipelines.registration.TransformationEstimationPointToPoint(),
+                    o3d.pipelines.registration.ICPConvergenceCriteria(max_iteration=50)
+                )
+
+                T_icp = icp_result.transformation
+
+                # Apply refinement
+                copy_teris.apply_transform(T_icp)
+                print(f"Cluster {cluster_id}: ICP fitness: {icp_result.fitness}, RMSE: {icp_result.inlier_rmse}")
+
+            except Exception as e:
+                print(f"Cluster {cluster_id}: ICP failed: {e}")
+
+            # Register refined mesh
+            obj = ps.register_surface_mesh(f"teris_refined {cluster_id}", copy_teris.vertices, copy_teris.faces, color = color_cluster[cluster_id] / 255.0)
+            obj.add_to_group(group_refined)
+
     else:
         print(f"Mesh not found at {mesh_path}")
 
