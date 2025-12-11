@@ -83,7 +83,42 @@ def drop_points_below_plane(points, plane_z=0.0):
     mask = points[:, 2] >= plane_z
     return points[mask]
 
+@wp.kernel
+def compute_loss_inverse(
+    mesh_id: wp.uint64,
+    target_points: wp.array(dtype=wp.vec3f),
+    pose_mesh_to_world: wp.array(dtype=wp.float32),
+    loss: wp.array(dtype=wp.float32)
+):
+    tid = wp.tid()
 
+    # 1. Construct the Transform (Mesh -> World)
+    p = wp.vec3f(pose_mesh_to_world[0], pose_mesh_to_world[1], pose_mesh_to_world[2])
+    q = wp.quaternion(pose_mesh_to_world[3], pose_mesh_to_world[4], pose_mesh_to_world[5], pose_mesh_to_world[6])
+
+    xform = wp.transform(p, q)
+
+    # 2. INVERSE: Map World Point -> Mesh Local Space
+    world_pt = target_points[tid]
+
+    # --- FIX START ---
+    # Invert the transform
+    inv_xform = wp.transform_inverse(xform)
+    # Apply the inverted transform to the point
+    local_pt = wp.transform_point(inv_xform, world_pt)
+    # --- FIX END ---
+
+    # 3. Query the static mesh in local space
+    query = wp.mesh_query_point_no_sign(mesh_id, local_pt, 1.0e6)
+
+    if query.result:
+        pt_on_mesh = wp.mesh_eval_position(mesh_id, query.face, query.u, query.v)
+
+        # Distance in local space
+        dist = wp.length(pt_on_mesh - local_pt)
+
+        # Accumulate loss
+        wp.atomic_add(loss, 0, dist)
 
 # -----------------------------------------------------------------------------
 # 1. Move UR Robot
@@ -439,6 +474,8 @@ else:
             inside_pts_pcl = ps.register_point_cloud(name = f"inside_pts_{cluster_id}", points=inside_pts)
             inside_pts_pcl.add_to_group(group_inside_pts)
 
+
+
             # ICP Registration
             # Source: Mesh Vertices (from predicted pose)
             # Target: Observed Points (inside sphere)
@@ -458,32 +495,83 @@ else:
             inside_pts_pcl = ps.register_point_cloud(name = f"samples_pts_{cluster_id}", points=samples)
             inside_pts_pcl.add_to_group(group_sample_points)
 
-            pcd_source = o3d.geometry.PointCloud()
-            pcd_source.points = o3d.utility.Vector3dVector(samples)
 
-            pcd_target = o3d.geometry.PointCloud()
-            pcd_target.points = o3d.utility.Vector3dVector(inside_pts)
+            # Use Canonical Mesh for Warp
+            # Ensure device is a string for Warp compatibility
+            wp_device = str(device)
+            print(f"Using Warp device: {wp_device}")
 
-            # Initial guess is Identity because source is already transformed to T
-            threshold = 0.005 # 0.5 cm distance threshold
+            mesh_vertices = wp.array(teris_mesh.vertices.astype(np.float32), dtype=wp.vec3f, device=wp_device)
+            mesh_indices = wp.array(teris_mesh.faces.flatten().astype(np.int32), device=wp_device)
+            wp_mesh = wp.Mesh(points=mesh_vertices, indices=mesh_indices)
 
-            try:
-                icp_result = o3d.pipelines.registration.registration_icp(
-                    pcd_source, pcd_target, threshold, np.eye(4),
-                    o3d.pipelines.registration.TransformationEstimationPointToPoint(),
-                    o3d.pipelines.registration.ICPConvergenceCriteria(max_iteration=50)
-                )
+            # Use Observed Points as Target
+            wp_target_points = wp.from_numpy(inside_pts.astype(np.float32), dtype=wp.vec3f, device=wp_device)
 
-                T_icp = icp_result.transformation
+            # Initialize Pose from Network Prediction
+            # rot_mat: (3, 3), center: (3,) in mm
+            from scipy.spatial.transform import Rotation as R
 
-                # Apply refinement
-                copy_teris.apply_transform(T_icp)
-                print(f"Cluster {cluster_id}: ICP fitness: {icp_result.fitness}, RMSE: {icp_result.inlier_rmse}")
+            t_init = center / 1000.0 # meters
+            r_init = R.from_matrix(rot_mat)
+            q_init = r_init.as_quat() # [x, y, z, w]
 
-            except Exception as e:
-                print(f"Cluster {cluster_id}: ICP failed: {e}")
+            # [tx, ty, tz, qx, qy, qz, qw]
+            initial_pose_list = np.concatenate([t_init, q_init]).tolist()
 
-            # Register refined mesh
+            start_pose = torch.tensor(initial_pose_list, dtype=torch.float32, device=device, requires_grad=True)
+
+            optimizer = torch.optim.Adam([start_pose], lr=0.01)
+            print(f"Start Pose: {start_pose.detach().cpu().numpy()}")
+
+            for i in range(200):
+                optimizer.zero_grad()
+
+                tape = wp.Tape()
+                with tape:
+                    wp_pose = wp.from_torch(start_pose, requires_grad=True)
+                    wp_loss = wp.zeros(1, dtype=wp.float32, device=wp_device, requires_grad=True)
+
+                    wp.launch(
+                        kernel=compute_loss_inverse,
+                        dim=inside_pts.shape[0],
+                        inputs=[wp_mesh.id, wp_target_points, wp_pose, wp_loss],
+                        outputs=[],
+                        device=wp_device
+                    )
+
+                tape.backward(wp_loss)
+
+                # Transfer gradients
+                if start_pose.grad is None:
+                    start_pose.grad = wp.to_torch(wp_pose.grad)
+                else:
+                    start_pose.grad += wp.to_torch(wp_pose.grad)
+
+                optimizer.step()
+
+                # Normalize Quaternion (Important!)
+                with torch.no_grad():
+                    start_pose[3:] = torch.nn.functional.normalize(start_pose[3:], dim=0)
+
+                if i % 20 == 0:
+                    print(f"Iter {i}: Loss = {wp_loss.numpy()[0]:.4f}")
+
+
+            # Convert back to Transformation Matrix
+            final_pose = start_pose.detach().cpu().numpy()
+            t_final = final_pose[:3]
+            q_final = final_pose[3:] # [x, y, z, w]
+
+            r_final = R.from_quat(q_final)
+            T_refined = np.eye(4)
+            T_refined[:3, :3] = r_final.as_matrix()
+            T_refined[:3, 3] = t_final
+
+            # Update copy_teris for final visualization
+            copy_teris = teris_mesh.copy()
+            copy_teris.apply_transform(T_refined)
+
             obj = ps.register_surface_mesh(f"teris_refined {cluster_id}", copy_teris.vertices, copy_teris.faces, color = color_cluster[cluster_id] / 255.0)
             obj.add_to_group(group_refined)
 

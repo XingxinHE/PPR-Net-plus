@@ -153,7 +153,7 @@ if __name__=='__main__':
     MAX_EPOCH = 5000
     # log setting
     PROJECT_NAME = "ppr_teris"
-    LOG_NAME = 'log_teris_test'
+    LOG_NAME = 'log_teris_symmetry' + datetime.now().strftime('%Y_%m_%d_%H')
     CHECKPOINT_PATH = None
     # lr decay
     BASE_LEARNING_RATE = 0.001
